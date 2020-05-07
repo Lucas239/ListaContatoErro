@@ -1,27 +1,13 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, View, FlatList} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import ContatoItem from '../components/ContatoItem';
-import ContatoInput from '../components/ContatoInput';
+import { Ionicons } from '@expo/vector-icons';
 import Medidas from '../Medidas/Medidas'
 
 const TelaComeco =(props)=>{
-  const[id, setId]= useState(10);
   const [contatos, setContatos] = useState ([]);
-  const[contadorContatos, setContadorContatos] = useState(0);
-
- 
   
-  const adicionarContato=(nome, numero)=>{
-    contato=(id, nome, numero);
 
-    setContatos((contatos)=>{
-      console.log(contatos);
-      setId(id+2);
-      setContadorContatos(contadorContatos+1);
-      return[{key:contadorContatos.toString(),value:contato=(id),
-      value2:contato=(nome),value3:contato=(numero)}, ...contatos];
-    });
-  };
   const removerContato = (keyASerRemovida)=>{
     setContatos(contatos=>{
         return contatos.filter((contato)=>{
@@ -32,7 +18,6 @@ const TelaComeco =(props)=>{
   return (
     <View style={estilos.tela}>
       <Text style={estilos.titulo}>Contatos Adicionados</Text>
-      <ContatoInput onAdicionarContato={adicionarContato}/>
       <FlatList
         data={contatos}
         renderItem={
@@ -40,6 +25,9 @@ const TelaComeco =(props)=>{
         <ContatoItem id={contato.item.value} nome={contato.item.value2} numero={contato.item.value3} 
         onDelete={removerContato}/>
       )}/>
+        <TouchableOpacity estilos={estilos.botao}>
+            <Ionicons name="ios-add-circle" size={35} onPress={()=>props.navigation.navigate('TelaContato')} />
+          </TouchableOpacity>
     </View>
   );
 }
